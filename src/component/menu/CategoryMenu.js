@@ -10,14 +10,11 @@ class CategoryMenu extends React.Component{
 
     render(){
 
-        // console.log(this.props.categoryList)
-
         return(
             <>
             
             {
                 this.props.categoryList.map(category => {
-                    console.log(category)
                     if(category.subPrdCategoryForMenuDtoList !== null && category.subPrdCategoryForMenuDtoList.length > 0){
                         return <CategoryMenuDropDown category = {category} key={category.id}></CategoryMenuDropDown>
                     } else {

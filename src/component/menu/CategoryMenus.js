@@ -21,7 +21,6 @@ class CategoryMenus extends React.Component{
 
     render(){
 
-        console.log(this.state.categoryList)
         return(
             <CategoryMenu categoryList={this.state.categoryList}/>
         )
