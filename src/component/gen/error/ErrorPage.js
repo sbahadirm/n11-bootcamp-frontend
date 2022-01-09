@@ -1,10 +1,12 @@
 import React from "react";
+import PageTitle from "../PageTitle";
 
 class ErrorPage extends React.Component{
 
     render(){
         return(
-            <p>Aradığınız sayfa bulunamadı!</p>
+            <PageTitle title = "Aradığınız sayfa bulunamadı!"></PageTitle>
+        
         )
     }
 }

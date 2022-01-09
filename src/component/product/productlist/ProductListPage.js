@@ -1,9 +1,12 @@
 import React from "react";
+import PageTitle from "../../gen/PageTitle";
+import './ProductList.css'
 
-class ProductList extends React.Component{
+class ProductListPage extends React.Component{
 
     state = {
-        productList : []
+        productList : [],
+        category : {}
     }
 
     constructor(props){
@@ -11,10 +14,38 @@ class ProductList extends React.Component{
     }
 
     componentDidMount(){
-        fetch('http://localhost:8080/api/v1/products/' + this.props.categoryId)
+
+       this.getProductList();
+       this.getCategory();
+    }
+
+    getProductList(){
+
+        var url = this.props.categoryId === null ? "http://localhost:8080/api/v1/products/" : 
+        "http://localhost:8080/api/v1/products/categories/" + this.props.categoryId;
+
+        fetch(url)
             .then((response) => response.json())
             .then(productList => {
                 this.setState({productList: productList})
+            });
+    }
+
+    getCategory(){
+
+        if(!this.props.categoryId){
+            return;
+        }
+        var url = "http://localhost:8080/api/v1/categories/" + this.props.categoryId; 
+
+        fetch(url)
+            .then((response) => response.json())
+            .then(category => {
+                console.log(category)
+                this.setState(
+                    
+                    {category: category}
+                    )
             });
     }
 
@@ -43,8 +74,14 @@ class ProductList extends React.Component{
     }
 
     render(){
+
+        var pageTitle = this.props.categoryId === null  ? "Tüm Ürünler" : this.state.category.name;
+
+
         return(
             <div className="row col-md-6 offset-md-3">
+
+                <PageTitle title = {pageTitle}></PageTitle>
 
             {this.state.productList.map((product, i) => (
 
@@ -77,4 +114,4 @@ class ProductList extends React.Component{
     }
 }
 
-export default ProductList;
+export default ProductListPage;
