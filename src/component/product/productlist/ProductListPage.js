@@ -1,5 +1,6 @@
 import React from "react";
 import PrdService from "../../../api/prd/PrdService";
+import FavListModal from "../../fav/FavListModal";
 import PageTitle from "../../gen/PageTitle";
 import './ProductList.css'
 
@@ -29,7 +30,6 @@ class ProductListPage extends React.Component {
     }
 
     handleResponse(response) {
-        console.log(response)
         this.setState({ productList: response.data })
     }
 
@@ -51,7 +51,6 @@ class ProductListPage extends React.Component {
     }
 
     handleCategoryResponse(response) {
-        console.log(response)
         this.setState({ category: response.data })
     }
 
@@ -97,7 +96,7 @@ class ProductListPage extends React.Component {
 
                     <div className="col-lg-4" key={i}>
                         <div className="card mb-4 shadow-sm">
-                            <img src={product.imageUrl} className="card-img-top image" alt="Sample Product" />
+                            <img src={product.imageUrl} className="card-img-top image-s" alt="Sample Product" />
                             <div className="card-body text-center">
                                 <h5 className="card-title ">{this.truncateOverview(product.name, 15)}</h5>
                                 <h6 className="card-title ">{product.additionalDiscount ? product.additionalDiscount + "%" : "-"}</h6>
@@ -109,7 +108,8 @@ class ProductListPage extends React.Component {
                                     <button
                                         type="button"
                                         onClick={(event) => this.props.addToBasketProp(product)}
-                                        className="btn btn-md btn-outline-primary">Sepete Ekle</button>
+                                        className="btn btn-md btn-outline-primary">🛒</button>
+                                        <FavListModal product={product}></FavListModal>
 
                                     <h2><span className="badge badge-info">{product.price}</span></h2>
                                 </div>

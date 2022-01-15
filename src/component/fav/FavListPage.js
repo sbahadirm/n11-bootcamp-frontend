@@ -11,12 +11,9 @@ class FavListPage extends React.Component {
         this.state = {
             favListList: []
         }
-
-
     }
 
     componentDidMount() {
-
         FavService.getFavListList()
             .then(respose => this.handleResponse(respose))
             .catch(error => this.handleError(error))
@@ -33,26 +30,24 @@ class FavListPage extends React.Component {
     render() {
 
         return (
-
             <>
                 <PageTitle title="Favori Listesi"></PageTitle>
-                <div class="container overflow-hidden">
-                    <div class="row gy-5">
+
+                <div className="container overflow-hidden">
+                    <div className="row gy-5">
 
                         {this.state.favListList.map(favlist => {
                             return (
-                                <div class="col-6">
-                                    <div class="p-3 border bg-light">
-                                        <Fav favListId={favlist.id}></Fav>
+                                <div className="col-6" key={favlist.id}>
+                                    <div className="p-3 border bg-light">
+                                        <Fav favListName={favlist.name} favListId={favlist.id}></Fav>
                                     </div>
                                 </div>
                             )
                         })}
-
                     </div>
                 </div>
             </>
-
         )
     }
 }

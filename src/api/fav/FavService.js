@@ -31,7 +31,7 @@ class FavService{
 
     removeProductFromList(favListProdcutId){
 
-        const url = '/api/v1/favs//products/' + favListProdcutId;
+        const url = '/api/v1/favs/products/' + favListProdcutId;
 
         return axios.delete(url);
     }
