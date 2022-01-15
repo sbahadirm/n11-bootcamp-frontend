@@ -1,4 +1,5 @@
 import React from "react";
+import PrdService from "../../api/prd/PrdService";
 import CategoryMenu from "./CategoryMenu";
 
 class CategoryMenus extends React.Component{
@@ -12,11 +13,20 @@ class CategoryMenus extends React.Component{
     }
 
     componentDidMount(){
-        fetch('http://localhost:8080/api/v1/categories/menu')
-            .then((response) => response.json())
-            .then(categoryList => {
-                this.setState({categoryList: categoryList})
-            });
+    
+        PrdService.getMenuItems()
+            .then(response => this.handleResponse(response))
+            .catch(error => this.handleError(error))
+            ;
+    }
+
+    handleResponse(response){
+        console.log(response)
+        this.setState({categoryList: response.data})
+    }
+
+    handleError(error){
+        console.log(error)
     }
 
     render(){

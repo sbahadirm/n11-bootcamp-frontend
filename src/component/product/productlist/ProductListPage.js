@@ -1,60 +1,70 @@
 import React from "react";
+import PrdService from "../../../api/prd/PrdService";
 import PageTitle from "../../gen/PageTitle";
 import './ProductList.css'
 
-class ProductListPage extends React.Component{
+class ProductListPage extends React.Component {
 
     state = {
-        productList : [],
-        category : {}
+        productList: [],
+        category: {}
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
-       this.getProductList();
-       this.getCategory();
+        this.getProductList();
+        this.getCategory();
     }
 
-    getProductList(){
+    getProductList() {
 
-        var url = this.props.categoryId === null ? "http://localhost:8080/api/v1/products/" : 
-        "http://localhost:8080/api/v1/products/categories/" + this.props.categoryId;
-
-        fetch(url)
-            .then((response) => response.json())
-            .then(productList => {
-                this.setState({productList: productList})
-            });
+        PrdService.getProductList(this.props.categoryId)
+            .then(response => this.handleResponse(response))
+            .catch(error => this.handleError(error))
+            ;
     }
 
-    getCategory(){
+    handleResponse(response) {
+        console.log(response)
+        this.setState({ productList: response.data })
+    }
 
-        if(!this.props.categoryId){
+    handleError(error) {
+        console.log(error)
+    }
+
+    getCategory() {
+
+        if (!this.props.categoryId) {
             return;
         }
-        var url = "http://localhost:8080/api/v1/categories/" + this.props.categoryId; 
 
-        fetch(url)
-            .then((response) => response.json())
-            .then(category => {
-                console.log(category)
-                this.setState(
-                    
-                    {category: category}
-                    )
-            });
+        PrdService.getCategory(this.props.categoryId)
+        .then(response => this.handleCategoryResponse(response))
+        .catch(error => this.handleCategoryError(error))
+        ;
+  
     }
 
-    truncateOverview(text, maxLength){
-        if(!text){
+    handleCategoryResponse(response) {
+        console.log(response)
+        this.setState({ category: response.data })
+    }
+
+    handleCategoryError(error) {
+        console.log(error)
+    }
+
+    truncateOverview(text, maxLength) {
+        if (!text) {
             return null;
         }
 
-        if(text.length <= maxLength){
+        if (text.length <= maxLength) {
             return text;
         }
 
@@ -63,52 +73,52 @@ class ProductListPage extends React.Component{
         return newText;
     }
 
-    calculatePrice(price, discount){
-        if(!price){
+    calculatePrice(price, discount) {
+        if (!price) {
             return null;
         }
 
-        const newPrice = price - (price*discount/100);
+        const newPrice = price - (price * discount / 100);
 
         return Number.parseFloat(newPrice).toFixed(2);
     }
 
-    render(){
+    render() {
 
-        var pageTitle = this.props.categoryId === null  ? "Tüm Ürünler" : this.state.category.name;
+        var pageTitle = this.props.categoryId === null ? "Tüm Ürünler" : this.state.category.name;
 
 
-        return(
+        return (
             <div className="row col-md-6 offset-md-3">
 
-                <PageTitle title = {pageTitle}></PageTitle>
+                <PageTitle title={pageTitle}></PageTitle>
 
-            {this.state.productList.map((product, i) => (
+                {this.state.productList.map((product, i) => (
 
-                <div className="col-lg-4" key={i}>
-                    <div className="card mb-4 shadow-sm">
-                        <img src={product.imageUrl} className="card-img-top image" alt="Sample Product" />
-                        <div className="card-body text-center">
-                            <h5 className="card-title ">{this.truncateOverview(product.name, 15)}</h5>
-                            <h6 className="card-title ">{product.additionalDiscount ? product.additionalDiscount + "%" : "-"}</h6>
-                            {/* */}
-                            <p className="card-text "><del>{product.price} TL</del></p>
+                    <div className="col-lg-4" key={i}>
+                        <div className="card mb-4 shadow-sm">
+                            <img src={product.imageUrl} className="card-img-top image" alt="Sample Product" />
+                            <div className="card-body text-center">
+                                <h5 className="card-title ">{this.truncateOverview(product.name, 15)}</h5>
+                                <h6 className="card-title ">{product.additionalDiscount ? product.additionalDiscount + "%" : "-"}</h6>
+                                {/* */}
+                                <p className="card-text "><del>{product.price} TL</del></p>
 
-                            <h6 className="card-text ">{this.calculatePrice(product.price, product.additionalDiscount)} TL</h6>
-                            <div className="justify-content-between align-items-center">
-                                <button
-                                    type="button"
-                                    onClick={(event) => this.props.addToBasketProp(product)}
-                                    className="btn btn-md btn-outline-primary">Sepete Ekle</button>
+                                <h6 className="card-text ">{this.calculatePrice(product.price, product.additionalDiscount)} TL</h6>
+                                <div className="justify-content-between align-items-center">
+                                    <button
+                                        type="button"
+                                        onClick={(event) => this.props.addToBasketProp(product)}
+                                        className="btn btn-md btn-outline-primary">Sepete Ekle</button>
 
-                                <h2><span className="badge badge-info">{product.price}</span></h2>
+                                    <h2><span className="badge badge-info">{product.price}</span></h2>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-            ))}
-        </div>
+                ))}
+            </div>
 
         )
     }
