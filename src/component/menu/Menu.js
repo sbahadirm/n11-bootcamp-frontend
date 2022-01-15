@@ -5,6 +5,16 @@ import CategoryMenus from "./CategoryMenus";
 
 class Menu extends React.Component {
 
+    constructor(props){
+        super(props)
+
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    handleLogout(){
+        this.props.logout();
+    }
+
     render() {
         return <div className="col-md-6 offset-md-3 ">
             <Navbar bg="light" expand="lg">
@@ -25,7 +35,9 @@ class Menu extends React.Component {
                                 <NavDropdown.Item href="/product/add">Ürün Ekle</NavDropdown.Item>
 
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item href="/logout">Çıkış</NavDropdown.Item>
+                                {!this.props.isLoggedOn &&  < NavDropdown.Item href="/login">Giriş</NavDropdown.Item>}
+                                {this.props.isLoggedOn && <NavDropdown.Item href="/" onClick={this.handleLogout}>Çıkış</NavDropdown.Item>}
+
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>

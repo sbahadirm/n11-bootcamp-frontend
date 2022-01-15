@@ -1,0 +1,109 @@
+import React from "react";
+import { Navigate } from "react-router-dom";
+import AuthenticationService from "../../api/sec/AuthenticationService";
+
+class LoginPage extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            username: "",
+            password: ""
+        }
+
+        this.handlerChange = this.handlerChange.bind(this)
+
+    }
+
+    handlerChange(event) {
+        console.log(event.target.value)
+        this.setState({ [event.target.name]: event.target.value })
+    }
+
+    handleFormSubmit = (e) => {
+        e.preventDefault();
+       
+        AuthenticationService.login(this.state.username, this.state.password)
+            .then(response => this.handleResponse(response))
+            .catch(error => this.handleError(error))
+            ;
+
+    }
+
+    handleResponse(response) {
+        console.log(response.data);
+
+        localStorage.setItem('token', response.data)
+        localStorage.setItem('username', this.state.username)
+
+        this.props.login()
+        console.log("local data storage: ");
+        console.log(localStorage.getItem('token'))
+    }
+
+    handleError(error) {
+        console.log(error.response)
+    }
+
+    render() {
+
+        if(localStorage.getItem('token')){
+            return <Navigate to='/'></Navigate>
+        }
+
+        return (<>
+            <div className="container">
+                <div className="text-center mt-5">
+                    <div className="row col-md-4 offset-md-4">
+
+                        <form className="form-signin" onSubmit={this.handleFormSubmit}>
+
+                            <img className="mb-4" src="https://n11scdn.akamaized.net/a1/org/21/04/01/67/61/13/35/59/54/78/68/68/62194584164326158720.svg" alt="" width="72" height="72" />
+                            <h1 className="h3 mb-3 font-weight-normal">Giriş</h1>
+
+                            <label htmlFor="inputEmail" className="sr-only">Email</label>
+                            <input
+                                type="email"
+                                id="inputEmail"
+                                className="form-control"
+                                placeholder="Email"
+                                required=""
+                                autoFocus=""
+                                value={this.state.username}
+                                name="username"
+                                onChange={this.handlerChange}
+                            />
+
+                            <label htmlFor="inputPassword" className="sr-only">Şifre</label>
+                            <input
+                                type="password"
+                                id="inputPassword"
+                                className="form-control"
+                                placeholder="Şifre"
+                                required=""
+                                value={this.state.password}
+                                name="password"
+                                onChange={this.handlerChange}
+                            />
+
+                            <div className="checkbox mb-3">
+                                <label>
+                                    <input type="checkbox" value="remember-me" /> Beni Hatırla
+                                </label>
+                            </div>
+
+                            <input type="submit" className="btn btn-danger btn-block" value="Kaydet" />
+                            <p className="mt-5 mb-3 text-muted">© 2022</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </>
+        )
+    }
+
+
+}
+
+export default LoginPage;
