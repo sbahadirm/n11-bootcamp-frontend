@@ -2,47 +2,48 @@ import React from "react";
 import BasketPage from "./BasketPage";
 import OrderSummaryPage from "./OrderSummaryPage";
 
-class BasketContainerPage extends React.Component{
+class BasketContainerPage extends React.Component {
 
-    constructor(){
+    constructor() {
         super();
 
         this.state = {
             selectedProducts: []
         }
+
+        this.addProduct = this.addProduct.bind(this);
+        this.removeProduct = this.removeProduct.bind(this);
     }
 
-    addProduct(product){
+    addProduct(product) {
 
         let list = this.state.selectedProducts;
 
         list.push(product);
 
-        this.setState({selectedProducts: list})
+        this.setState({ selectedProducts: list })
 
-        console.log(this.state)
     }
 
-    removeProduct(product){
+    removeProduct(product) {
         let list = this.state.selectedProducts;
 
         list.pop(product);
 
-        this.setState({selectedProducts: list})
+        this.setState({ selectedProducts: list })
 
-        console.log(this.state)
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="container">
                 <div className="row">
                     <div className="col-8">
-                        <BasketPage  addProduct={this.addProduct} removeProduct={this.removeProduct} ></BasketPage>
+                        <BasketPage addProduct={this.addProduct} removeProduct={this.removeProduct} ></BasketPage>
                     </div>
 
                     <div className="col-4">
-                        <OrderSummaryPage products = {this.state.selectedProducts} ></OrderSummaryPage>
+                        <OrderSummaryPage products={this.state.selectedProducts} ></OrderSummaryPage>
                     </div>
                 </div>
             </div>

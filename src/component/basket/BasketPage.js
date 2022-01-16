@@ -1,43 +1,71 @@
 import React from "react";
+import BasService from "../../api/bas/BasService";
 import PageTitle from "../gen/PageTitle";
+import BasketProduct from "./BasketProduct";
 
-class BasketPage extends React.Component{
+class BasketPage extends React.Component {
 
-    render(){
-        return(
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            products: []
+        }
+    }
+
+    componentDidMount() {
+
+        BasService.getProductList()
+            .then(respose => this.handleResponse(respose))
+            .catch(error => this.handleError(error))
+    }
+
+    handleResponse(response) {
+        this.setState({ products: response.data })
+
+        console.log(this.state)
+    }
+
+    handleError(error) {
+        console.log(error);
+    }
+
+    addProduct(product){
+        this.props.addProduct(product)
+    }
+
+    removeProduct(product){
+        this.props.removeProduct(product)
+    }
+
+    render() {
+        return (
             <div className="container">
-            <PageTitle title="Sepetim"></PageTitle>
+                <PageTitle title="Sepetim"></PageTitle>
 
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Adı</th>
-                        <th scope="col">Görsel</th>
-                        <th scope="col">Fiyatı</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Adı</th>
+                            <th scope="col">Görsel</th>
+                            <th scope="col">Fiyatı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-                    
-                    {/* {this.state.products.map(product => <BasketProduct
+                        {this.state.products.map(product => <BasketProduct
                             key={this.state.products.indexOf(product)}
                             index={this.state.products.indexOf(product) + 1}
                             product={product}
-                            addProduct={() =>this.addProduct(product)}
-                            removeProduct = {() => this.removeProduct(product)}
+                            addProduct={() => this.addProduct(product)}
+                            removeProduct={() => this.removeProduct(product)}
                         ></BasketProduct>
-                    )} */}
+                        )}
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
         )
     }
 }
