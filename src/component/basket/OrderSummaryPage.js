@@ -1,15 +1,17 @@
 import React from "react";
+import OrdService from "../../api/ord/OrdService";
 import PageTitle from "../gen/PageTitle";
 
-class OrderSummaryPage extends React.Component{
+class OrderSummaryPage extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.getTotalPrice = this.getTotalPrice.bind(this);
+        this.createOrder = this.createOrder.bind(this)
     }
 
-    getTotalPrice(){
+    getTotalPrice() {
 
         let totalPrice = 0;
 
@@ -20,8 +22,32 @@ class OrderSummaryPage extends React.Component{
         return totalPrice;
     }
 
-    render(){
-        return(
+    createOrder() {
+
+        const order = {
+            username: sessionStorage.getItem('username'),
+            paidAmount: this.getTotalPrice(),
+            deliveryCompany: 'kolaygelsin',
+            addressId: 111
+        }
+
+        console.log(order)
+
+        OrdService.createOrder(order)
+            .then(response => this.handleResponse(response))
+            .catch(error => this.handleError(error))
+    }
+
+    handleResponse(response) {
+        console.log(response.data)
+    }
+
+    handleError(error) {
+        console.log(error)
+    }
+
+    render() {
+        return (
             <div className="container">
                 <PageTitle title="Sipariş Özeti"></PageTitle>
 
@@ -37,7 +63,7 @@ class OrderSummaryPage extends React.Component{
                         <li className="list-group-item">Toplam: {this.getTotalPrice()} TL</li>
                     </ul>
                     <div className="card-body">
-                        <a href="#" className="btn btn-success">Sipariş Ver</a>
+                        <a className="btn btn-success" onClick={this.createOrder}>Sipariş Ver</a>
                         <a href="/list" className="card-link">Alışverişe Devam Et</a>
                     </div>
                 </div>
