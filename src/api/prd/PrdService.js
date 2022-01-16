@@ -26,6 +26,12 @@ class PrdService{
         return axios.get(url);
     }
 
+    saveProduct(newProduct){
+        var url = "api/v1/products";
+
+        return axios.post(url, newProduct);
+    }
+
 }
 
 export default new PrdService();

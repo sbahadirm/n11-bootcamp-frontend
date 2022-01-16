@@ -1,6 +1,7 @@
 import React from "react";
 import PageTitle from "../../gen/PageTitle";
 import serialize from 'form-serialize';
+import PrdService from "../../../api/prd/PrdService";
 
 
 class AddProductPage extends React.Component {
@@ -19,29 +20,18 @@ class AddProductPage extends React.Component {
 
     save(newProduct) {
 
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newProduct)
-        }
-
-        fetch('http://localhost:8080/api/v1/products', requestOptions)
-            .then(response => response.json())
-            .then(data => { 
-                console.log("data geldi")
-                console.log(data)
-                this.setState({ product: data })
-                
-                if(data.id ){
-                    this.clearForm(); 
-                }
-                
-            })
+        PrdService.saveProduct(newProduct)
+            .then(response => this.handleResponse(response))
+            .catch(error => this.handleError(error))
             ;
+    }
 
+    handleResponse(response){
+        console.log(response.data);
+    }
+
+    handleResponse(error){
+        console.log(error.data);
     }
 
     clearForm() {
