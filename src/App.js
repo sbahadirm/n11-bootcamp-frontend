@@ -31,10 +31,8 @@ class App extends React.Component {
 
   logout(){
 
-    console.log("logout on app.js");
-
     this.setState({isLoggedOn:false})
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   render() {

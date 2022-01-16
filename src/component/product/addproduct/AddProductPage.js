@@ -3,6 +3,7 @@ import PageTitle from "../../gen/PageTitle";
 import serialize from 'form-serialize';
 import PrdService from "../../../api/prd/PrdService";
 import CategoryCombobox from "../../gen/combobox/category/CategoryCombobox";
+import VendorCombobox from "../../gen/combobox/vendor/VendorCombobox";
 
 
 class AddProductPage extends React.Component {
@@ -28,10 +29,11 @@ class AddProductPage extends React.Component {
     }
 
     handleResponse(response) {
-        console.log(response.data);
+        
+        
     }
 
-    handleResponse(error) {
+    handleError(error) {
         console.log(error.data);
     }
 
@@ -73,10 +75,11 @@ class AddProductPage extends React.Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="inputName">Satıcı</label>
-                            <input type="number"
-                                className="form-control"
-
-                                name="vendorUserId" />
+                         
+                                <VendorCombobox
+                                    fieldName="vendorUserId"
+                                    notNull={true}
+                                ></VendorCombobox>
                         </div>
                         <div className="form-group ">
                             <label htmlFor="inputImage">Görsel Url'i</label>

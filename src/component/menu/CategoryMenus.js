@@ -21,7 +21,6 @@ class CategoryMenus extends React.Component{
     }
 
     handleResponse(response){
-        console.log(response)
         this.setState({categoryList: response.data})
     }
 

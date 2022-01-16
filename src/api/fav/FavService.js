@@ -4,7 +4,7 @@ class FavService{
 
     getFavListList(){
 
-        const username = localStorage.getItem('username');
+        const username = sessionStorage.getItem('username');
 
         const url = '/api/v1/favs/users/username/' + username;
 

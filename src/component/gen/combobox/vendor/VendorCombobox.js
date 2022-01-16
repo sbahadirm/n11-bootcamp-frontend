@@ -1,8 +1,8 @@
 import React from "react";
-import PrdService from "../../../../api/prd/PrdService";
+import UsrService from "../../../../api/usr/UsrService";
 import Combobox from "../Combobox";
 
-class CategoryCombobox extends React.Component {
+class VendorCombobox extends React.Component {
 
     constructor(props) {
         super(props)
@@ -14,7 +14,7 @@ class CategoryCombobox extends React.Component {
 
     componentDidMount() {
 
-        PrdService.getAllCategories()
+        UsrService.getAllVendors()
             .then(response => this.handleResponse(response))
             .catch(error => this.handleError(error))
             ;
@@ -40,4 +40,4 @@ class CategoryCombobox extends React.Component {
     }
 }
 
-export default CategoryCombobox;
+export default VendorCombobox;

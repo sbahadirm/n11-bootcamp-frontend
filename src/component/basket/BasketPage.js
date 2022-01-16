@@ -22,8 +22,6 @@ class BasketPage extends React.Component {
 
     handleResponse(response) {
         this.setState({ products: response.data })
-
-        console.log(this.state)
     }
 
     handleError(error) {

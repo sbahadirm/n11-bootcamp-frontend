@@ -17,7 +17,6 @@ class LoginPage extends React.Component {
     }
 
     handlerChange(event) {
-        console.log(event.target.value)
         this.setState({ [event.target.name]: event.target.value })
     }
 
@@ -32,14 +31,11 @@ class LoginPage extends React.Component {
     }
 
     handleResponse(response) {
-        console.log(response.data);
 
-        localStorage.setItem('token', response.data)
-        localStorage.setItem('username', this.state.username)
+        sessionStorage.setItem('token', response.data)
+        sessionStorage.setItem('username', this.state.username)
 
         this.props.login()
-        console.log("local data storage: ");
-        console.log(localStorage.getItem('token'))
     }
 
     handleError(error) {
@@ -48,7 +44,7 @@ class LoginPage extends React.Component {
 
     render() {
 
-        if(localStorage.getItem('token')){
+        if(sessionStorage.getItem('token')){
             return <Navigate to='/'></Navigate>
         }
 
