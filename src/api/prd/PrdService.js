@@ -3,6 +3,13 @@ import axios from "axios";
 
 class PrdService{
 
+    getAllCategories(){
+
+        const url = '/api/v1/categories';
+
+        return axios.get(url);
+    }
+
     getMenuItems(){
 
         const url = 'api/v1/categories/menu';

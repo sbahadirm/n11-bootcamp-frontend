@@ -2,6 +2,7 @@ import React from "react";
 import PageTitle from "../../gen/PageTitle";
 import serialize from 'form-serialize';
 import PrdService from "../../../api/prd/PrdService";
+import CategoryCombobox from "../../gen/combobox/category/CategoryCombobox";
 
 
 class AddProductPage extends React.Component {
@@ -15,7 +16,7 @@ class AddProductPage extends React.Component {
         const newProduct = serialize(e.target, { hash: true })
 
         this.save(newProduct);
-       
+
     }
 
     save(newProduct) {
@@ -26,55 +27,55 @@ class AddProductPage extends React.Component {
             ;
     }
 
-    handleResponse(response){
+    handleResponse(response) {
         console.log(response.data);
     }
 
-    handleResponse(error){
+    handleResponse(error) {
         console.log(error.data);
     }
 
     clearForm() {
-            document.getElementById("product-form").reset();
+        document.getElementById("product-form").reset();
     }
 
     render() {
         return (
-            
+
             <div className="container col-md-6 offset-md-3">
-                
+
                 <PageTitle title="Ürün Ekle"></PageTitle>
 
                 <form id="product-form" className="mt-5" onSubmit={this.handleFormSubmit}>
-                    
+
                     <div className="form-row">
 
                         <div className="form-group">
                             <label htmlFor="inputName">Adı</label>
                             <input type="text"
                                 className="form-control"
-                                
+
                                 name="name" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="inputName">Kısa Adı</label>
                             <input type="text"
                                 className="form-control"
-                                
+
                                 name="shortName" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="inputName">Kategori</label>
-                            <input type="number"
-                                className="form-control"
-                                
-                                name="categoryId" />
+                            <CategoryCombobox
+                                fieldName="categoryId"
+                               
+                            ></CategoryCombobox>
                         </div>
                         <div className="form-group">
                             <label htmlFor="inputName">Satıcı</label>
                             <input type="number"
                                 className="form-control"
-                                
+
                                 name="vendorUserId" />
                         </div>
                         <div className="form-group ">
@@ -82,21 +83,21 @@ class AddProductPage extends React.Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                
+
                                 name="imageUrl" />
                         </div>
                         <div className="form-group ">
                             <label htmlFor="inputRating">Fiyat</label>
                             <input
                                 className="form-control "
-                               
+
                                 name="price" />
                         </div>
                         <div className="form-group ">
                             <label htmlFor="inputRating">İndirim</label>
                             <input
                                 className="form-control "
-                                
+
                                 name="additionalDiscount" />
                         </div>
                     </div>
