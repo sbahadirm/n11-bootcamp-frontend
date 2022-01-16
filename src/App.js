@@ -3,13 +3,13 @@ import './App.css';
 import HomePage from './component/home/HomePage';
 import ErrorPage from './component/gen/error/ErrorPage';
 import Menu from './component/menu/Menu';
-import BasketPage from './component/basket/BasketPage';
 import CategoryPage from './component/category/CategoryPage';
 import ProductListPage from './component/product/productlist/ProductListPage';
 import AddProductPage from './component/product/addproduct/AddProductPage';
 import LoginPage from './component/login/LoginPage';
 import React from 'react';
 import FavListPage from './component/fav/FavListPage';
+import BasketContainerPage from './component/basket/BasketContainerPage';
 
 
 class App extends React.Component {
@@ -46,7 +46,7 @@ class App extends React.Component {
           <Route path="/" element={<HomePage></HomePage>}></Route>
           <Route path="*" element={<ErrorPage></ErrorPage>}></Route>
           <Route path="/list" element={<ProductListPage categoryId={null} />}></Route>
-          <Route path="/basket" element={<BasketPage></BasketPage>}></Route>
+          <Route path="/basket" element={<BasketContainerPage></BasketContainerPage>}></Route>
           <Route path="/category/:id" element={<CategoryPage></CategoryPage>}></Route>
           <Route path="/product/add" element={<AddProductPage />}></Route>
           <Route path="/favorylist" element={<FavListPage />}></Route>
