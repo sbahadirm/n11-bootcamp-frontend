@@ -10,6 +10,7 @@ import LoginPage from './component/login/LoginPage';
 import React from 'react';
 import FavListPage from './component/fav/FavListPage';
 import BasketContainerPage from './component/basket/BasketContainerPage';
+import OrderPage from './component/order/OrderPage';
 
 
 class App extends React.Component {
@@ -56,6 +57,7 @@ class App extends React.Component {
           <Route path="/" element={<HomePage></HomePage>}></Route>
           <Route path="*" element={<ErrorPage></ErrorPage>}></Route>
           <Route path="/list" element={<ProductListPage categoryId={null} />}></Route>
+          <Route path="/orders" element={<OrderPage></OrderPage>}></Route>
           <Route path="/basket" element={<BasketContainerPage></BasketContainerPage>}></Route>
           <Route path="/category/:id" element={<CategoryPage></CategoryPage>}></Route>
           <Route path="/product/add" element={<AddProductPage />}></Route>

@@ -1,4 +1,5 @@
 import React from "react";
+import BasService from "../../../api/bas/BasService";
 import PrdService from "../../../api/prd/PrdService";
 import FavListModal from "../../fav/FavListModal";
 import PageTitle from "../../gen/PageTitle";
@@ -82,6 +83,17 @@ class ProductListPage extends React.Component {
         return Number.parseFloat(newPrice).toFixed(2);
     }
 
+    addProductToBasket(product){
+
+        BasService.addProductToBasket(product)
+            .then(response => this.handleAddProductResponse(response))
+            .then(error => this.handleError(error))
+    }
+
+    handleAddProductResponse(response){
+        //
+    }
+
     render() {
 
         var pageTitle = this.props.categoryId === null ? "Tüm Ürünler" : this.state.category.name;
@@ -107,7 +119,7 @@ class ProductListPage extends React.Component {
                                 <div className="justify-content-between align-items-center">
                                     <button
                                         type="button"
-                                        onClick={(event) => this.props.addToBasketProp(product)}
+                                        onClick={(event) => this.addProductToBasket(product)}
                                         className="btn btn-md btn-outline-primary">🛒</button>
                                         <FavListModal product={product}></FavListModal>
 

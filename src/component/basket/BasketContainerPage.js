@@ -13,6 +13,7 @@ class BasketContainerPage extends React.Component {
 
         this.addProduct = this.addProduct.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
+        this.refreshPage = this.refreshPage.bind(this)
     }
 
     addProduct(product) {
@@ -34,7 +35,20 @@ class BasketContainerPage extends React.Component {
 
     }
 
+    refreshPage(){
+
+        console.log("state");
+        console.log(this.state)
+
+        this.setState({selectedProducts: []})
+       
+    }
+
     render() {
+
+        console.log("render");
+        console.log(this.state)
+
         return (
             <div className="container">
                 <div className="row">
@@ -43,7 +57,7 @@ class BasketContainerPage extends React.Component {
                     </div>
 
                     <div className="col-4">
-                        <OrderSummaryPage products={this.state.selectedProducts} ></OrderSummaryPage>
+                        <OrderSummaryPage products={this.state.selectedProducts} refreshPage={this.refreshPage}></OrderSummaryPage>
                     </div>
                 </div>
             </div>

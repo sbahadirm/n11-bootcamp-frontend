@@ -1,25 +1,34 @@
 import axios from "axios";
 
-class BasService{
+class BasService {
 
-      getProductList(){
+  getProductList() {
 
-        const username = sessionStorage.getItem('username');
+    const username = sessionStorage.getItem('username');
 
-        const url = '/api/v1/basket/users/' + username + '/products/';
+    const url = '/api/v1/basket/users/' + username + '/products/';
 
-        return axios.get(url);
-    }
+    return axios.get(url);
+  }
 
-    getBasket(){
-      const username = sessionStorage.getItem('username');
+  getBasket() {
+    const username = sessionStorage.getItem('username');
 
-      const url = '/api/v1/basket/users/' + username ;
+    const url = '/api/v1/basket/users/' + username;
 
-      return axios.get(url);
-    }
+    return axios.get(url);
+  }
 
-    
+  addProductToBasket(product) {
+
+    const username = sessionStorage.getItem('username');
+
+    const url = '/api/v1/basket/users/' + username + '/products'
+
+    return axios.post(url, product);
+  }
+
+  
 }
 
 export default new BasService();

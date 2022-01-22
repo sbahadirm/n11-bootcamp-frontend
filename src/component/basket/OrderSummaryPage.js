@@ -24,11 +24,18 @@ class OrderSummaryPage extends React.Component {
 
     createOrder() {
 
+        const basBasketProductIdList = [];
+
+        this.props.products.forEach(element => {
+            basBasketProductIdList.push(element.id)
+        });
+
         const order = {
             username: sessionStorage.getItem('username'),
             paidAmount: this.getTotalPrice(),
             deliveryCompany: 'kolaygelsin',
-            addressId: 111
+            addressId: 111,
+            basBasketProductIdList: basBasketProductIdList
         }
 
         console.log(order)
@@ -39,6 +46,8 @@ class OrderSummaryPage extends React.Component {
     }
 
     handleResponse(response) {
+        this.props.refreshPage();
+
         console.log(response.data)
     }
 

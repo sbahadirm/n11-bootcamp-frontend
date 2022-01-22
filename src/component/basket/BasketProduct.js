@@ -1,21 +1,22 @@
 import React from "react";
 import { FormCheck } from "react-bootstrap";
+import StringUtil from "../../api/gen/StringUtil";
 
-class BasketProduct extends React.Component{
+class BasketProduct extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
-            isSelected : false
+            isSelected: false
         }
 
         this.handleSelect = this.handleSelect.bind(this)
     }
 
-    handleSelect(){
+    handleSelect() {
 
-        this.setState({isSelected: !this.state.isSelected})
+        this.setState({ isSelected: !this.state.isSelected })
 
         if (this.state.isSelected) {
             this.props.removeProduct();
@@ -25,33 +26,31 @@ class BasketProduct extends React.Component{
     }
 
     currencyFormat(num) {
-        let dollarUSLocale = Intl.NumberFormat('tr-TR');
+        return StringUtil.currencyFormat(num)
+    }
 
-        return dollarUSLocale.format(num)
-     }
+    render() {
 
-    render(){
-
-        return(
+        return (
             <>
-            <tr>
-                <th scope="row">
-                    <FormCheck onChange={this.handleSelect} ></FormCheck>
-                </th>
-                <td>
-                    {this.props.product.productName}
-                </td>
-                <td>
-                    <img className="image-icon" src={this.props.product.productImageUrl} ></img>
-                </td>
-                <td>
-                    {this.currencyFormat(this.props.product.productPrice)} TL
-                </td>
-                {/* <td>
+                <tr>
+                    <th scope="row">
+                        <FormCheck onChange={this.handleSelect} ></FormCheck>
+                    </th>
+                    <td>
+                        {this.props.product.productName}
+                    </td>
+                    <td>
+                        <img className="image-icon" src={this.props.product.productImageUrl} ></img>
+                    </td>
+                    <td>
+                        {this.currencyFormat(this.props.product.productPrice)} TL
+                    </td>
+                    {/* <td>
                     <button type="button" className="btn btn-danger" onClick={this.handleRemoveClick}>Çıkar</button>
                 </td> */}
-            </tr>
-        </>
+                </tr>
+            </>
 
         )
     }
