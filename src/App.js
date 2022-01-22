@@ -35,10 +35,22 @@ class App extends React.Component {
     sessionStorage.clear();
   }
 
+  getIsLogged(){
+
+    const token = sessionStorage.getItem('token');
+
+    const isLogged = token ? true: false;
+
+    return isLogged;
+  }
+
   render() {
+
+    const isLogged = this.getIsLogged();
+
     return (
       <div className="App">
-        <Menu isLoggedOn={this.state.isLoggedOn} logout={this.logout}></Menu>
+        <Menu isLoggedOn={isLogged} logout={this.logout}></Menu>
 
         <Routes>
           <Route path="/" element={<HomePage></HomePage>}></Route>
